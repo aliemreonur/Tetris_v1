@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Materials
+  m_EditorClassIdentifier: 
+  m_GroupName: Materials
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a6724899af4ed4763b68fc7b986eab46
+  m_SerializeEntries:
+  - m_GUID: 14226b01470f44609a4cfdd0b621aede
+    m_Address: Materials/DefaultMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Materials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0008095b0da01455fac8ee6bf8006bf1
+    m_Address: Materials/GlowMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Materials
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6b466c958c654320bb33afc90d71df4
+    m_Address: Materials/GhostMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0039c4b127d2747f699c1a71e58cde7f
+    m_Address: Materials/White
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 00448e146eec2462f87085f9258984b4, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 9d26c53ce6ca34b67bfd7184e9d296aa, type: 2}
+    - {fileID: 11400000, guid: c1f59dced330e4bd9a68487d5cde5a50, type: 2}
