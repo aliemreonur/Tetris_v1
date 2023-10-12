@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      yellow_button11_0: -4367918007981437236
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

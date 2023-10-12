@@ -86,8 +86,7 @@ public class UIManager : Singleton<UIManager>
 
     public void RestartLevel()
     {
-        //this needs to call the reset
-
+        //Needs Fix
         GameManager.Instance.GameStopped();
         OnStartButton();
         _pausePanel.SetActive(false);

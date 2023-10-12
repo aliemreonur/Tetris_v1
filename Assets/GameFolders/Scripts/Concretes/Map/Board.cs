@@ -15,7 +15,7 @@ public class Board : Singleton<Board>
 
     private BgTile[,] _allBgTiles;
     private MatchHandler _matchHandler;
-    private PlayerDataHandler _playerDataHandler;
+    private IPlayerDataHandler _playerDataHandler;
     private List<BgTile> _activeTiles = new();
     private BackgroundLoader _backgroundLoader;
     private BackgroundAdjuster _bgAdjuster;

@@ -70,6 +70,7 @@ public class MatchHandler
         for(int i=0; i<_board.Width; i++)
         {
             tasks[i] = _board.allBgTiles[i, rawId].HadAMatch();
+            _board.allBgTiles[i, rawId].CellStatusChanged(false); //this is also getting null from the piece
         }
 
         await Task.WhenAll(tasks);

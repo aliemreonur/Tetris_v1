@@ -27,6 +27,11 @@ public class PlayerDataHandler : IPlayerDataHandler
         OnNextLevelAchieved?.Invoke();
     }
 
+    public void DeregisterEvents()
+    {
+        _playerScoreHandler.DeregisterEvents();
+    }
+
     private void LoadPlayerData() //this does not needs to be public
     {
         if (_playerData != null) //we have already gathered the data

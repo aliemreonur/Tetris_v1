@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      red_boxCross_0: -3973597964633630434
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

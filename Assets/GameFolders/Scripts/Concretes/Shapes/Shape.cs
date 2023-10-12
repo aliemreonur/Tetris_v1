@@ -11,12 +11,14 @@ public class Shape : MonoBehaviour
     public Action OnPlacedOnGround;
     public Action OnSpawn;
     public Action OnInactivated;
+    public bool IsMoving => _isMoving;
 
     [SerializeField] private bool _canRotate = true; //this is shorutcut fix for square rotation control
     private List<Piece> _pieces;
     private bool _isMoving;
     private IShapeRotator _shapeRotator;
     private IMovementChecker _movementChecker;
+    private GhostShape _ghostShape;
     #endregion
 
     #region MonoMethods
@@ -48,9 +50,15 @@ public class Shape : MonoBehaviour
         _shapeRotator.SpawnRotation();
     }
 
+    public void AssignGhostShape(GhostShape ghostShape)
+    {
+        _ghostShape = ghostShape;
+    }
+
     public void Move(int sideMovement)
     {
         _movementChecker.Move(sideMovement);
+        _ghostShape?.PlaceGhost();
     }
 
     public void CorrectiveSideMovement()
@@ -88,9 +96,9 @@ public class Shape : MonoBehaviour
     {
        if (!_canRotate)
             return;
-       if (!_isMoving || !GameManager.Instance.IsGameRunning)
-            return;
+
         _shapeRotator.RotateShape();
+        _ghostShape?.PlaceGhost();
     }
 
     public void ShapeOnTheGround()

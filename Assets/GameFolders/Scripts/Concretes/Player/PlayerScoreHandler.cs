@@ -13,6 +13,7 @@ public class PlayerScoreHandler : IPlayerScorer
         _playerDataHandler = playerDataHandler;
         TotalScore = playerData.PlayerScore;
         RawsScore = 0;
+        GameManager.Instance.OnGameStopped += ResetScores;
     }
 
     public void RawDestroyed(byte rawAmount)
@@ -32,6 +33,7 @@ public class PlayerScoreHandler : IPlayerScorer
     public void SetRawSuccessAmount(byte newSuccessAmount)
     {
         _currentRawGoal = newSuccessAmount;
+        PlayerScoreUpdated();
     }
 
     public void SetPlayerScore(int scoreToSet)
@@ -39,9 +41,20 @@ public class PlayerScoreHandler : IPlayerScorer
         TotalScore = scoreToSet;
     }
 
+    public void DeregisterEvents()
+    {
+        GameManager.Instance.OnGameStopped -= ResetScores;
+    }
+
     private void PlayerScoreUpdated()
     {
         UIManager.Instance.SetRawsUI(RawsScore, _currentRawGoal, TotalScore, _playerDataHandler.PlayerLevel);
+    }
+
+    private void ResetScores()
+    {
+        RawsScore = 0;
+        PlayerScoreUpdated();
     }
 
 }

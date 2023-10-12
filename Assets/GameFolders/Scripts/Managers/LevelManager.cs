@@ -25,7 +25,6 @@ public class LevelManager : Singleton<LevelManager>
 
     private void Start()
     {
-        //load the new level as the game ends and wait for the player to start the game
         GameManager.Instance.OnGameStopped += LoadNewLevel;
     }
 
@@ -39,13 +38,8 @@ public class LevelManager : Singleton<LevelManager>
     #region Public Methods
     public async void ReloadLevel()
     {
-        //set the timescale to 1
-        //reset player data
-        //reset the board
-
         await LoadTiles();
     }
-
 
     public void AssignPlayerData(PlayerDataHandler playerDataHandler)
     {
@@ -93,8 +87,6 @@ public class LevelManager : Singleton<LevelManager>
     {
         _currentPlayerLevel = _playerDataHandler.PlayerLevel;
         GameManager.Instance.GameEnded(true);
-        //Success - Level Passed
-        //Action on new level
         LoadNewLevel();
     }
 

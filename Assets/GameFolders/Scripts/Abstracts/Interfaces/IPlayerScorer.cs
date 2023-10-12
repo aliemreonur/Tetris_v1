@@ -1,6 +1,6 @@
 
 
-public interface IPlayerScorer
+public interface IPlayerScorer: IEventDeregister
 {
     int TotalScore { get; }
     byte RawsScore { get; }

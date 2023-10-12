@@ -21,7 +21,7 @@ public class ShapeRotator : IShapeRotator
 
     public void RotateShape()
     {
-        if (!CanRotate())
+        if (!CanRotate() || !_shape.IsMoving || !GameManager.Instance.IsGameRunning)
             return;
 
         Vector3 currentPos = entityTransform.position;
