@@ -1,4 +1,3 @@
-using UnityEngine;
 
 public class PlayerScoreHandler : IPlayerScorer
 {
@@ -7,11 +6,13 @@ public class PlayerScoreHandler : IPlayerScorer
 
     private byte _currentRawGoal;
     private PlayerDataHandler _playerDataHandler;
+    private int _initialScore;
 
     public PlayerScoreHandler(PlayerDataHandler playerDataHandler, PlayerData playerData)
     {
         _playerDataHandler = playerDataHandler;
-        TotalScore = playerData.PlayerScore;
+        _initialScore = playerData.PlayerScore;
+        TotalScore = _initialScore;
         RawsScore = 0;
         GameManager.Instance.OnGameStopped += ResetScores;
     }
@@ -36,11 +37,6 @@ public class PlayerScoreHandler : IPlayerScorer
         PlayerScoreUpdated();
     }
 
-    public void SetPlayerScore(int scoreToSet)
-    {
-        TotalScore = scoreToSet;
-    }
-
     public void DeregisterEvents()
     {
         GameManager.Instance.OnGameStopped -= ResetScores;
@@ -54,6 +50,7 @@ public class PlayerScoreHandler : IPlayerScorer
     private void ResetScores()
     {
         RawsScore = 0;
+        TotalScore = _initialScore;
         PlayerScoreUpdated();
     }
 

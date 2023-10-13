@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -7,7 +5,6 @@ public class PlayerDataHandler : IPlayerDataHandler
 {
     public Action OnNextLevelAchieved;
     public byte PlayerLevel { get; private set; }
-    //public int PlayerScore => _playerScoreHandler.TotalScore;
     public int PlayerRaws => _playerScoreHandler.RawsScore;
     public IPlayerScorer PlayerScoreHandler => _playerScoreHandler;
 
@@ -32,20 +29,18 @@ public class PlayerDataHandler : IPlayerDataHandler
         _playerScoreHandler.DeregisterEvents();
     }
 
-    private void LoadPlayerData() //this does not needs to be public
+    private void LoadPlayerData() 
     {
-        if (_playerData != null) //we have already gathered the data
+        if (_playerData != null) 
             return;
 
         _playerData = SaveLoadSystem.LoadData();
-        //PlayerLevel = _playerData.LevelID;
-        PlayerLevel = 1; //tbd
-
+        PlayerLevel = _playerData.LevelID;
+        PlayerLevel = LevelManager.Instance.TestLevel ? (byte)1 : _playerData.LevelID;
         _playerScoreHandler = new PlayerScoreHandler(this, _playerData);
-        _playerData.SetPlayerData(PlayerLevel, 0); //tbd
-        
+        if(LevelManager.Instance.TestLevel)
+            _playerData.SetPlayerData(PlayerLevel, 0);
 
-        //if not test 
         LevelManager.Instance.AssignPlayerData(this);
     }
 

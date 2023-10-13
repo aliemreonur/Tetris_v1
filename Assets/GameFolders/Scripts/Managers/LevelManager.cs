@@ -9,15 +9,15 @@ public class LevelManager : Singleton<LevelManager>
     #region Fields&Properties
     public Action OnPlayerPassedLevel;
     public Action OnNewLevelLoaded;
-    
+
+    public bool TestLevel;
     public byte LevelHeight => _levelHeight;
     public byte LevelWidth => _levelWidth;
 
-    [SerializeField] private bool _testLevel;
     private AsyncOperationHandle<ScriptableObject> _loadLevelHandle; //load the map on a seperate loader 
     private byte _levelHeight, _levelWidth;
     private PlayerDataHandler _playerDataHandler;
-    [SerializeField] private byte _currentPlayerLevel = 1;
+    private byte _currentPlayerLevel = 1;
 
     #endregion
 
@@ -87,6 +87,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         _currentPlayerLevel = _playerDataHandler.PlayerLevel;
         GameManager.Instance.GameEnded(true);
+        OnPlayerPassedLevel?.Invoke();
         LoadNewLevel();
     }
 

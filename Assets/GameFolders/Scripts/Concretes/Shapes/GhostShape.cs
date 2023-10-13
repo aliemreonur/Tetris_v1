@@ -1,62 +1,85 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GhostShape : MonoBehaviour
 {
     #region Fields&Properties
     [SerializeField] private List<Transform> _children = new List<Transform>();
-    private Transform _activeShape;
+    private Transform _activeGhostShape;
     private Shape _currentShape;
     private bool _isGroundReached;
-    private int xPos, yPos;
+    private int yPos;
     #endregion
 
     #region Mono Methods
     void Start()
     {
-        SpawnManager.Instance.OnShapeSpawned += AssignShape;
-        if (_children.Count != 7)
-        {
-            Debug.Log("The ghost object has not properly set");
-            Destroy(gameObject);
-        }
- 
-        foreach(var child in _children)
-        {
-            child.gameObject.SetActive(false);
-        }
+        RegisterEvents();
+        Init();
     }
+
+    private void OnDisable()
+    {
+        DeregisterEvents();
+    }
+
     #endregion
 
     #region Public Methods
     public void PlaceGhost()
     {
         _isGroundReached = false;
-        _activeShape.transform.rotation = _currentShape.transform.rotation;
-        _activeShape.position = _currentShape.transform.position;
-        xPos = (int)_activeShape.transform.position.x;
-        yPos = (int)_activeShape.transform.position.y;
+        _activeGhostShape.transform.rotation = _currentShape.transform.rotation;
+        _activeGhostShape.position = _currentShape.transform.position;
+        yPos = (int)_activeGhostShape.transform.position.y;
         CheckGround();
     }
     #endregion
 
     #region Private Methods
 
+    private void Init()
+    {
+        if (_children.Count != 7)
+        {
+            Debug.Log("The ghost object has not properly set");
+            Destroy(gameObject);
+        }
+
+        foreach (var child in _children)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
+    private void RegisterEvents()
+    {
+        SpawnManager.Instance.OnShapeSpawned += AssignShape;
+        LevelManager.Instance.OnPlayerPassedLevel += DeactivateShape;
+        GameManager.Instance.OnGameStopped += DeactivateShape;
+    }
+
+    private void DeregisterEvents()
+    {
+        SpawnManager.Instance.OnShapeSpawned -= AssignShape;
+        LevelManager.Instance.OnPlayerPassedLevel -= DeactivateShape;
+        GameManager.Instance.OnGameStopped -= DeactivateShape;
+    }
+
     private void AssignShape(int activeChild, Shape shapeToAssign)
     {
-        if(_activeShape != null)
+        if(_activeGhostShape != null)
         {
-            _activeShape.gameObject.SetActive(false);
+            _activeGhostShape.gameObject.SetActive(false);
             _currentShape.AssignGhostShape(null);
         } 
         _currentShape = shapeToAssign;
         _currentShape.AssignGhostShape(this);
-        _activeShape = _children[activeChild];
-        _activeShape.gameObject.SetActive(true);
+        _activeGhostShape = _children[activeChild];
+        _activeGhostShape.gameObject.SetActive(true);
     }
 
-    private void CheckGround()
+    private async void CheckGround()
     {
         int childx = 0;
         int childy = 0;
@@ -64,7 +87,7 @@ public class GhostShape : MonoBehaviour
 
         while (!_isGroundReached)
         {
-            foreach (Transform child in _activeShape)
+            foreach (Transform child in _activeGhostShape)
             {
                 childx = (int)child.position.x;
                 childy = (int)child.position.y - counter;
@@ -81,7 +104,7 @@ public class GhostShape : MonoBehaviour
                 yPos--;
             }   
         }
-        _activeShape.transform.position = new Vector2(_activeShape.position.x, yPos);
+        _activeGhostShape.transform.position = new Vector2(_activeGhostShape.position.x, yPos);
     }
 
     private bool CheckForNextPosition(int x, int y)
@@ -96,6 +119,11 @@ public class GhostShape : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    private void DeactivateShape()
+    {
+        _activeGhostShape.gameObject.SetActive(false);
     }
     #endregion
 }
